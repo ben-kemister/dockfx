@@ -11,12 +11,38 @@
     <url>https://github.com/ClearControl/DockFX.git</url>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+    	<jdk.version>11</jdk.version>
+    	<openjfx.version>11.0.2</openjfx.version>
         <netbeans.checkstyle.format>true</netbeans.checkstyle.format>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <fileExtensions>java, properties, xml</fileExtensions>
     </properties>
+
+	<dependencies>
+			<dependency>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-base</artifactId>
+			    <version>${openjfx.version}</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
+			<dependency>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-controls</artifactId>
+			    <version>${openjfx.version}</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
+			<dependency>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-fxml</artifactId>
+			    <version>${openjfx.version}</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-web -->
+			<dependency>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-web</artifactId>
+			    <version>${openjfx.version}</version>
+			</dependency>
+	</dependencies>
 
     <build>
         <plugins>
@@ -57,9 +83,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.8.1</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <release>${jdk.version}</release>
+					<forceJavacCompilerUse>true</forceJavacCompilerUse>
                 </configuration>
             </plugin>
             <plugin>
