@@ -977,6 +977,7 @@ public class DockPane extends StackPane
                                                      filePath);
     }
   }
+  
 
   private ContentHolder checkPane(HashMap<String, ContentHolder> contents,
                                   ContentPane pane,
