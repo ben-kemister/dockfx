@@ -1,4 +1,4 @@
-package org.dockfx.preference;
+package org.dockfx;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -15,9 +15,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.dockfx.ContentHolder;
-import org.dockfx.DockPane;
-
 /**
  * This class supports the ability to persist (and load) the {@link DockPane}'s layout preference
  * using different {@link InputStream}s and {@link OutputStream}s.
@@ -29,9 +26,9 @@ import org.dockfx.DockPane;
  * @since 21 April 2020
  *
  */
-public class PreferenceHandler {
+public class DockPanePreferenceHandler {
 
-  private static final Logger LOGGER = Logger.getLogger(PreferenceHandler.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(DockPanePreferenceHandler.class.getName());
 
 
   /**
@@ -67,6 +64,12 @@ public class PreferenceHandler {
   }
 
 
+  /**
+   * Returns the {@link Map} which represents a {@link DockPane}'s layout preferences from the given filePath.
+   * 
+   * @param filePath the path to the file which contains the {@link DockPane} preferences.
+   * @return a {@link Map} representing a {@link DockPane}'s layout preferences
+   */
   public Map<String, ContentHolder> getPreferences(String filePath) {
 
     Map<String, ContentHolder> contents = null;
@@ -88,6 +91,12 @@ public class PreferenceHandler {
   }
 
 
+  /**
+   * Returns the {@link Map} which represents a {@link DockPane}'s layout preferences from the given inputStream.
+   * 
+   * @param inputStream the {@link InputStream} which contains the {@link DockPane} preferences.
+   * @return a {@link Map} representing a {@link DockPane}'s layout preferences
+   */
   @SuppressWarnings("unchecked")
   public Map<String, ContentHolder> getPreferences(InputStream inputStream) {
 
@@ -99,6 +108,5 @@ public class PreferenceHandler {
     }
     return contents;
   }
-
 
 }

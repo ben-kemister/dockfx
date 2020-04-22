@@ -39,8 +39,6 @@ import org.dockfx.pane.ContentPane;
 import org.dockfx.pane.ContentSplitPane;
 import org.dockfx.pane.ContentTabPane;
 import org.dockfx.pane.DockNodeTab;
-import org.dockfx.preference.PreferenceHandler;
-
 import com.sun.javafx.css.StyleManager;
 
 import javafx.animation.KeyFrame;
@@ -739,7 +737,7 @@ public class DockPane extends StackPane implements EventHandler<DockEvent> {
     HashMap<String, ContentHolder> contents = getContentsForPreferences();
 
     // Try to write layout to file.
-    new PreferenceHandler().savePreferences(contents, filePath);
+    new DockPanePreferenceHandler().savePreferences(contents, filePath);
   }
 
 
@@ -754,7 +752,7 @@ public class DockPane extends StackPane implements EventHandler<DockEvent> {
     HashMap<String, ContentHolder> contents = getContentsForPreferences();
 
     // Try to write layout to output stream
-    new PreferenceHandler().savePreferences(contents, outputStream);
+    new DockPanePreferenceHandler().savePreferences(contents, outputStream);
   }
 
 
@@ -863,7 +861,7 @@ public class DockPane extends StackPane implements EventHandler<DockEvent> {
   
   public void loadPreference(String filePath, DelayOpenHandler delayOpenHandler) {
 
-    Map<String, ContentHolder> contents = new PreferenceHandler().getPreferences(filePath);
+    Map<String, ContentHolder> contents = new DockPanePreferenceHandler().getPreferences(filePath);
 
     if (contents != null) {
       applyPane(contents, (ContentPane) root, delayOpenHandler);
@@ -879,7 +877,7 @@ public class DockPane extends StackPane implements EventHandler<DockEvent> {
    */
   public void loadPreference(InputStream inputStream, DelayOpenHandler delayOpenHandler) {
 
-    Map<String, ContentHolder> contents = new PreferenceHandler().getPreferences(inputStream);
+    Map<String, ContentHolder> contents = new DockPanePreferenceHandler().getPreferences(inputStream);
 
     if (contents != null) {
       applyPane(contents, (ContentPane) root, delayOpenHandler);
