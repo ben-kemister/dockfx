@@ -299,37 +299,29 @@ public class DockTitleBar extends HBox implements EventHandler<MouseEvent>
   }
 
   /**
-   * Traverse the scene graph for all open stages and pick an event target for a
-   * dock event based on the location. Once the event target is chosen run the
-   * event task with the target and the previous target of the last dock event
-   * if one is cached. If an event target is not found fire the explicit dock
-   * event on the stage root if one is provided.
+   * Traverse the scene graph for all open stages and pick an event target for a dock event based on
+   * the location. Once the event target is chosen run the event task with the target and the
+   * previous target of the last dock event if one is cached. If an event target is not found fire
+   * the explicit dock event on the stage root if one is provided.
    * 
-   * @param location
-   *          The location of the dock event in screen coordinates.
-   * @param eventTask
-   *          The event task to be run when the event target is found.
-   * @param explicit
-   *          The explicit event to be fired on the stage root when no event
-   *          target is found.
+   * @param location The location of the dock event in screen coordinates.
+   * @param eventTask The event task to be run when the event target is found.
+   * @param explicit The explicit event to be fired on the stage root when no event target is found.
    */
-  private void pickEventTarget(Point2D location,
-                               EventTask eventTask,
-                               Event explicit)
-  {
+  private void pickEventTarget(Point2D location, EventTask eventTask, Event explicit) {
     // RFE for public scene graph traversal API filed but closed:
     // https://bugs.openjdk.java.net/browse/JDK-8133331
 
-	ObservableList<Window> windows = Window.getWindows();
-	
+    ObservableList<Window> windows = Window.getWindows();
+
     // fire the dock over event for the active stages
     for (Window window : windows) {
-    	
-		if(!(window instanceof Stage)) {
-			continue;
-		}
-		Stage targetStage = (Stage) window;
-    	
+
+      if (!(window instanceof Stage)) {
+        continue;
+      }
+      Stage targetStage = (Stage) window;
+
       // obviously this title bar does not need to receive its own events
       // though users of this library may want to know when their
       // dock node is being dragged by subclassing it or attaching
@@ -344,34 +336,25 @@ public class DockTitleBar extends HBox implements EventHandler<MouseEvent>
 
       Parent root = targetStage.getScene().getRoot();
       Stack<Parent> stack = new Stack<Parent>();
-      if (root.contains(root.screenToLocal(location.getX(),
-                                           location.getY()))
-          && !root.isMouseTransparent())
-      {
+      if (root.contains(root.screenToLocal(location.getX(), location.getY()))
+          && !root.isMouseTransparent()) {
         stack.push(root);
       }
       // depth first traversal to find the deepest node or parent with no
       // children
       // that intersects the point of interest
-      while (!stack.isEmpty())
-      {
+      while (!stack.isEmpty()) {
         Parent parent = stack.pop();
         // if this parent contains the mouse click in screen coordinates in its
         // local bounds
         // then traverse its children
         boolean notFired = true;
-        for (Node node : parent.getChildrenUnmodifiable())
-        {
-          if (node.contains(node.screenToLocal(location.getX(),
-                                               location.getY()))
-              && !node.isMouseTransparent())
-          {
-            if (node instanceof Parent)
-            {
+        for (Node node : parent.getChildrenUnmodifiable()) {
+          if (node.contains(node.screenToLocal(location.getX(), location.getY()))
+              && !node.isMouseTransparent()) {
+            if (node instanceof Parent) {
               stack.push((Parent) node);
-            }
-            else
-            {
+            } else {
               eventTask.run(node, dragNode);
             }
             notFired = false;
@@ -380,15 +363,12 @@ public class DockTitleBar extends HBox implements EventHandler<MouseEvent>
         }
         // if none of the children fired the event or there were no children
         // fire it with the parent as the target to receive the event
-        if (notFired)
-        {
+        if (notFired) {
           eventTask.run(parent, dragNode);
         }
       }
 
-      if (explicit != null && dragNode != null
-          && eventTask.getExecutions() < 1)
-      {
+      if (explicit != null && dragNode != null && eventTask.getExecutions() < 1) {
         Event.fireEvent(dragNode, explicit.copyFor(this, dragNode));
         dragNodes.put(targetStage, null);
       }

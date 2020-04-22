@@ -76,13 +76,20 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 /**
- * This class source is copied from
- * {@link javafx.scene.control.skin.TabPaneSkin} in version 11.0.2 of
- * org/openjfx/javafx-controls/javafx-controls-11.0.2-sources.jar. In a
- * different java version, this source might not work properly.
+ * This class source is copied from {@link javafx.scene.control.skin.TabPaneSkin} in version 11.0.2
+ * of org/openjfx/javafx-controls/javafx-controls-11.0.2-sources.jar. In a different java version,
+ * this source might not work properly.
  * 
- * The inner class TabMenuItem is modified to handle DockNodeTab title because
- * the tab uses customized graphics
+ * The inner class TabMenuItem is modified to handle DockNodeTab title because the tab uses
+ * customized graphics
+ * 
+ * <br>
+ * <br>
+ * <strong>Please note</strong>: the code styles of this class does not follow the 'Google Java
+ * style conventions' as requested in the projects README.md. This has been done intentionally so
+ * that this file closely matches the original source in
+ * {@link javafx.scene.control.skin.TabPaneSkin}.
+ * 
  * 
  */
 public class ContentTabPaneSkin extends SkinBase<TabPane> {
