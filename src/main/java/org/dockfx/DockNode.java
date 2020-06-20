@@ -1187,6 +1187,7 @@ public class DockNode extends VBox implements EventHandler<MouseEvent>
     this.tabbedProperty.set(false);
   }
 
+  
   /**
    * Close this dock node by setting it to not floating and making sure it is
    * detached from any dock pane.
@@ -1194,6 +1195,7 @@ public class DockNode extends VBox implements EventHandler<MouseEvent>
   public void close()
   {
     this.closedProperty.set(true);
+    
     if (isFloating())
     {
       setFloating(false);
@@ -1202,6 +1204,11 @@ public class DockNode extends VBox implements EventHandler<MouseEvent>
     else if (isDocked())
     {
       undock();
+    }
+    
+    //Notify the contents about the close event.
+    if(contents != null) {
+      contents.fireEvent(new DockNodeEvent(this, DockNodeEvent.NODE_CLOSED));
     }
   }
 
